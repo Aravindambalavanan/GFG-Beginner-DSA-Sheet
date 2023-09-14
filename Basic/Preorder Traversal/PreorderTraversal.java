@@ -1,4 +1,3 @@
-
 import java.util.LinkedList;
 import java.util.Queue;
 import java.io.*;
@@ -42,6 +41,7 @@ class GfG {
             if (!currVal.equals("N")) {
 
                 currNode.left = new Node(Integer.parseInt(currVal));
+
                 queue.add(currNode.left);
             }
 
@@ -63,6 +63,16 @@ class GfG {
         return root;
     }
 
+    static void printInorder(Node root) {
+        if (root == null)
+            return;
+
+        printInorder(root.left);
+        System.out.print(root.data + " ");
+
+        printInorder(root.right);
+    }
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -71,24 +81,29 @@ class GfG {
         while (t > 0) {
             String s = br.readLine();
             Node root = buildTree(s);
-            Solution g = new Solution();
-            ArrayList<Integer> res = g.inOrder(root);
-            for (int i = 0; i < res.size(); i++)
-                System.out.print(res.get(i) + " ");
-            System.out.print("\n");
+            ArrayList<Integer> res = BinaryTree.preorder(root);
+            for (Integer num : res)
+                System.out.print(num + " ");
+            System.out.println();
             t--;
+
         }
     }
+
 }
 
-class Solution {
-    ArrayList<Integer> inOrder(Node root) {
+class BinaryTree {
+
+    static ArrayList<Integer> preorder(Node root) {
+        // Code here
         ArrayList<Integer> list = new ArrayList<>();
         if (root != null) {
-            list.addAll(inOrder(root.left));
             list.add(root.data);
-            list.addAll(inOrder(root.right));
+            list.addAll(preorder(root.left));
+            list.addAll(preorder(root.right));
+
         }
         return list;
     }
+
 }
